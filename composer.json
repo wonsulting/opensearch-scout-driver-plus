@@ -1,5 +1,5 @@
 {
-    "name": "friendsofcat/opensearch-scout-driver-plus",
+    "name": "wonsulting/opensearch-scout-driver-plus",
     "description": "Extension for OpenSearch Scout Driver",
     "keywords": [
         "scout",
@@ -31,13 +31,13 @@
     },
     "require": {
         "php": "^7.4 || ^8.0",
-        "friendsofcat/opensearch-scout-driver": "^2.1"
+        "wonsulting/opensearch-scout-driver": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "orchestra/testbench": "^7.5",
         "laravel/scout": "^10.0",
-        "friendsofcat/opensearch-migrations": "^2.0",
+        "wonsulting/opensearch-migrations": "^2.0",
         "friendsofphp/php-cs-fixer": "^3.8",
         "phpstan/phpstan": "^1.6",
         "laravel/legacy-factories": "^1.3"
