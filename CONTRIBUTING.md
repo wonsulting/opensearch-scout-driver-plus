@@ -18,26 +18,35 @@
 
 ## Running the Test Suite
 
-To run tests locally you need PHP (7.2 or higher), [Composer](https://getcomposer.org/download/) and [Docker](https://www.docker.com/products/docker-desktop).
+To run tests locally you need PHP (8.2 or higher), [Composer](https://getcomposer.org/download/) and [Docker](https://www.docker.com/products/docker-desktop).
 
 Install the project dependencies:
 ```
 composer install
 ```
 
+The integration suite talks to a local OpenSearch on `127.0.0.1:9200`. Start one with Docker:
+```
+docker run -d --name opensearch-test -p 9200:9200 \
+  -e discovery.type=single-node \
+  -e plugins.security.disabled=true \
+  -e OPENSEARCH_INITIAL_ADMIN_PASSWORD='N0t-Us3d!Local' \
+  opensearchproject/opensearch:2
+```
+
 Run the test suite:
 ```
-make up wait test
+composer test
 ```
 
 ## Code Analysis
 
 To ensure, that your code follows PSR-2 standards you can run:
 ```
-make style-check 
+composer check-style
 ```
 
 It is also recommended to perform static code analysis before opening a PR:
 ```
-make static-analysis 
+composer analyse
 ```
