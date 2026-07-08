@@ -12,7 +12,6 @@
 * [refineModels](#refinemodels)
 * [rescore](#rescore)
 * [routing](#routing)
-* [searchAfter](#searchafter)
 * [searchType](#searchtype)
 * [size](#size)
 * [sort](#sort)

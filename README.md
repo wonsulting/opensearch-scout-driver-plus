@@ -1,6 +1,6 @@
 # OpenSearch Scout Driver Plus
 
-Extension for [OpenSearch Scout Driver](https://github.com/friendsofcat/opensearch-scout-driver).
+Extension for [OpenSearch Scout Driver](https://github.com/wonsulting/opensearch-scout-driver).
 
 ## Contents
 
@@ -24,7 +24,6 @@ OpenSearch Scout Driver Plus supports:
 * [Highlighting](docs/available-methods.md#highlight)
 * [Multiple connections](#multiple-connections)
 * [Search across multiple indices](docs/available-methods.md#join)
-* [Search after](docs/available-methods.md#searchafter)
 * [Source filtering](docs/available-methods.md#source)
 * [Suggesters](docs/available-methods.md#suggest)
 
@@ -32,33 +31,30 @@ OpenSearch Scout Driver Plus supports:
 
 The current version of OpenSearch Scout Driver Plus has been tested with the following configuration:
 
-* PHP 7.4-8.2
+* PHP 8.2+
 * OpenSearch 2.x
-* Laravel 7.x-10.x
-* Laravel Scout 7.x-10.x
+* Laravel 11.x-13.x
+* Laravel Scout 10.x-11.x
 
 ## Installation
 
 The library can be installed via Composer:
 
 ```bash
-composer require friendsofcat/opensearch-scout-driver-plus
+composer require wonsulting/opensearch-scout-driver-plus
 ```
 
 **Note** that this library doesn't work without OpenSearch Scout Driver. If it's not installed yet, please follow
-the installation steps described [here](https://github.com/friendsofcat/opensearch-scout-driver#installation). If you
+the installation steps described [here](https://github.com/wonsulting/opensearch-scout-driver#installation). If you
 already use OpenSearch Scout Driver, I recommend you to update it before installing OpenSearch Scout Driver Plus:
 
 ```bash
-composer update friendsofcat/opensearch-scout-driver
+composer update wonsulting/opensearch-scout-driver
 ```
 
 After installing the libraries, you need to add `OpenSearch\ScoutDriverPlus\Searchable` trait to your models. In case
 some models already use the standard `Laravel\Scout\Searchable` trait, you should replace it with the one provided by
 OpenSearch Scout Driver Plus.
-
-If you want to use OpenSearch Scout Driver Plus with [Lumen framework](https://lumen.laravel.com/)
-refer to [this guide](https://github.com/babenkoivan/elastic-scout-driver-plus/wiki/Lumen-Installation).
 
 ## Usage
 
@@ -128,7 +124,6 @@ $builder = Book::searchQuery($query)
 The builder supports various search parameters and provides a number of useful helpers:
 
 * [aggregate](docs/available-methods.md#aggregate)
-* [boostIndex](docs/available-methods.md#boostindex)
 * [collapse](docs/available-methods.md#collapse)
 * [from](docs/available-methods.md#from)
 * [highlight](docs/available-methods.md#highlight)
@@ -234,7 +229,7 @@ In case you are looking for a way to preload relations for models matching a sea
 
 ### Multiple Connections
 
-You can configure multiple connections to OpenSearch in the [client's configuration file](https://github.com/friendsofcat/opensearch-client/tree/master#configuration).
+You can configure multiple connections to OpenSearch in the [client's configuration file](https://github.com/wonsulting/opensearch-client/tree/master#configuration).
 If you want to change a connection used by a model, you need to override the `searchableConnection` method:
 
 ```php
