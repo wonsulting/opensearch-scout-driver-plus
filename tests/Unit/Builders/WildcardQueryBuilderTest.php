@@ -4,16 +4,15 @@ namespace OpenSearch\ScoutDriverPlus\Tests\Unit\Builders;
 
 use OpenSearch\ScoutDriverPlus\Builders\WildcardQueryBuilder;
 use OpenSearch\ScoutDriverPlus\Exceptions\QueryBuilderValidationException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Builders\WildcardQueryBuilder
- *
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder::class)]
+#[CoversClass(WildcardQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator::class)]
 final class WildcardQueryBuilderTest extends TestCase
 {
     private WildcardQueryBuilder $builder;

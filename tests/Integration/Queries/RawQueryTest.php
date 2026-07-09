@@ -12,40 +12,39 @@ use OpenSearch\ScoutDriverPlus\Tests\App\Author;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\App\Model;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use RuntimeException;
 use const SORT_NUMERIC;
 use stdClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Engine
- * @covers \OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Factories\ModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Support\Query
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Hit
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\SearchResult
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Suggestion
- * @uses   \OpenSearch\ScoutDriverPlus\Exceptions\NotSearchableModelException
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\ParameterFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Paginator
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\ModelFactory::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Support\Query::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder::class)]
+#[UsesClass(Hit::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\SearchResult::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\Suggestion::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Exceptions\NotSearchableModelException::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\ParameterFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Paginator::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class RawQueryTest extends TestCase
 {
     public function test_models_can_be_found_using_raw_query(): void
     {
         // additional mixin
-        factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create();
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['title' => uniqid('test')]);
 
         $found = Book::searchQuery([
@@ -59,8 +58,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_using_raw_query_and_highlight(): void
     {
-        $target = factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create(['title' => uniqid('test')])
             ->sortBy('id', SORT_NUMERIC);
 
@@ -91,8 +90,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_using_raw_query_and_sort(): void
     {
-        $target = factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create()
             ->sortBy('id', SORT_NUMERIC);
 
@@ -105,8 +104,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_using_raw_query_and_from(): void
     {
-        factory(Book::class, 10)
-            ->state('belongs_to_author')
+        Book::factory()->count(10)
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -119,8 +118,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_using_raw_query_and_size(): void
     {
-        factory(Book::class, 4)
-            ->state('belongs_to_author')
+        Book::factory()->count(4)
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -133,8 +132,8 @@ final class RawQueryTest extends TestCase
 
     public function test_raw_result_can_be_retrieved(): void
     {
-        factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])->raw();
@@ -145,8 +144,8 @@ final class RawQueryTest extends TestCase
     public function test_terms_can_be_suggested(): void
     {
         $target = collect(['world', 'word'])->map(
-            static fn (string $title) => factory(Book::class)
-                ->state('belongs_to_author')
+            static fn (string $title) => Book::factory()
+                ->belongsToAuthor()
                 ->create(compact('title'))
         );
 
@@ -172,8 +171,8 @@ final class RawQueryTest extends TestCase
 
     public function test_document_fields_can_be_filtered_using_raw_source(): void
     {
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -190,8 +189,8 @@ final class RawQueryTest extends TestCase
 
     public function test_document_fields_can_be_filtered_using_source(): void
     {
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -211,16 +210,16 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_using_raw_field_collapsing(): void
     {
-        $firstTarget = factory(Book::class)
-            ->state('belongs_to_author')
+        $firstTarget = Book::factory()
+            ->belongsToAuthor()
             ->create(['price' => 100]);
 
-        $secondTarget = factory(Book::class)
-            ->state('belongs_to_author')
+        $secondTarget = Book::factory()
+            ->belongsToAuthor()
             ->create(['price' => 200]);
 
         // additional mixin
-        factory(Book::class, 10)->create([
+        Book::factory()->count(10)->create([
             'price' => static fn () => random_int(500, 1000),
             'author_id' => $firstTarget->author_id,
         ]);
@@ -246,12 +245,12 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_using_field_collapsing(): void
     {
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['published' => Carbon::createFromFormat('Y-m-d', '2020-06-20')]);
 
         // additional mixin
-        factory(Book::class, 10)->create([
+        Book::factory()->count(10)->create([
             'published' => static fn () => $target->published->subDays(rand(1, 10)),
             'author_id' => $target->author_id,
         ]);
@@ -267,8 +266,8 @@ final class RawQueryTest extends TestCase
 
     public function test_document_data_can_be_analyzed_using_raw_aggregations(): void
     {
-        $source = factory(Book::class, rand(5, 10))
-            ->state('belongs_to_author')
+        $source = Book::factory()->count(rand(5, 10))
+            ->belongsToAuthor()
             ->create();
 
         $minPrice = $source->min('price');
@@ -295,8 +294,8 @@ final class RawQueryTest extends TestCase
 
     public function test_document_data_can_be_analyzed_using_aggregations(): void
     {
-        $source = factory(Book::class, rand(2, 5))
-            ->state('belongs_to_author')
+        $source = Book::factory()->count(rand(2, 5))
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery()
@@ -313,12 +312,12 @@ final class RawQueryTest extends TestCase
     public function test_models_can_be_found_using_post_filter(): void
     {
         // additional mixin
-        factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create();
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['published' => Carbon::create(2020, 6, 7)]);
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -330,8 +329,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_paginated(): void
     {
-        $target = factory(Book::class, 5)
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(5)
+            ->belongsToAuthor()
             ->create()
             ->sortBy('id', SORT_NUMERIC)
             ->chunk(3);
@@ -364,8 +363,8 @@ final class RawQueryTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
 
-        factory(Book::class, rand(2, 5))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 5))
+            ->belongsToAuthor()
             ->create();
 
         Book::searchQuery(['match_all' => new stdClass()])
@@ -375,8 +374,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_with_relations_in_a_single_index(): void
     {
-        factory(Book::class, 5)
-            ->state('belongs_to_author')
+        Book::factory()->count(5)
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -390,8 +389,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_with_relations_in_multiple_indices(): void
     {
-        factory(Book::class, 5)
-            ->state('belongs_to_author')
+        Book::factory()->count(5)
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -408,8 +407,8 @@ final class RawQueryTest extends TestCase
 
     public function test_query_callback_executed_in_a_single_model_class(): void
     {
-        factory(Book::class, 5)
-            ->state('belongs_to_author')
+        Book::factory()->count(5)
+            ->belongsToAuthor()
             ->create();
 
         $selectedColumns = ['id', 'title', 'description'];
@@ -426,8 +425,8 @@ final class RawQueryTest extends TestCase
 
     public function test_query_callbacks_executed_in_multiple_model_classes(): void
     {
-        factory(Book::class, 5)
-            ->state('belongs_to_author')
+        Book::factory()->count(5)
+            ->belongsToAuthor()
             ->create();
 
         $bookSelectedColumns = ['id', 'title', 'description'];
@@ -450,27 +449,25 @@ final class RawQueryTest extends TestCase
 
     public function test_search_result_can_be_cached(): void
     {
-        $target = factory(Book::class, rand(2, 5))
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(rand(2, 5))
+            ->belongsToAuthor()
             ->create()
             ->sortBy('id', SORT_NUMERIC);
 
         $cacheStore = Cache::store('file');
         $cacheStore->clear();
 
-        $found = $cacheStore->rememberForever('raw_search_result', static function () {
-            return Book::searchQuery(['match_all' => new stdClass()])
+        $found = $cacheStore->rememberForever('raw_search_result', static fn () => Book::searchQuery(['match_all' => new stdClass()])
                 ->sort('id')
-                ->execute();
-        });
+                ->execute());
 
         $this->assertFoundModels($target, $found);
     }
 
     public function test_total_hits_calculation_can_be_skipped(): void
     {
-        $target = factory(Book::class, rand(2, 5))
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(rand(2, 5))
+            ->belongsToAuthor()
             ->create()
             ->sortBy('id', SORT_NUMERIC);
 
@@ -485,8 +482,8 @@ final class RawQueryTest extends TestCase
 
     public function test_total_hits_number_can_be_limited(): void
     {
-        $target = factory(Book::class, 10)
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(10)
+            ->belongsToAuthor()
             ->create()
             ->sortBy('id', SORT_NUMERIC);
 
@@ -501,8 +498,8 @@ final class RawQueryTest extends TestCase
 
     public function test_scores_can_be_tracked_when_sorting_on_field(): void
     {
-        factory(Book::class)
-            ->state('belongs_to_author')
+        Book::factory()
+            ->belongsToAuthor()
             ->create();
 
         $found = Book::searchQuery(['match_all' => new stdClass()])
@@ -516,8 +513,8 @@ final class RawQueryTest extends TestCase
 
     public function test_index_results_can_be_boosted(): void
     {
-        $firstTarget = factory(Book::class)
-            ->state('belongs_to_author')
+        $firstTarget = Book::factory()
+            ->belongsToAuthor()
             ->create();
 
         $secondTarget = $firstTarget->author;
@@ -531,8 +528,8 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_retrieved_from_suggestions(): void
     {
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['title' => 'The Book']);
 
         $found = Book::searchQuery()
@@ -552,15 +549,15 @@ final class RawQueryTest extends TestCase
 
     public function test_models_can_be_found_with_custom_routing(): void
     {
-        $target = factory(Book::class)->create([
-            'author_id' => factory(Author::class)->create([
+        $target = Book::factory()->create([
+            'author_id' => Author::factory()->create([
                 'name' => 'John Doe',
             ]),
         ]);
 
         // additional mixin
-        factory(Book::class, rand(2, 5))->create([
-            'author_id' => factory(Author::class)->create([
+        Book::factory()->count(rand(2, 5))->create([
+            'author_id' => Author::factory()->create([
                 'name' => 'Jane Roe',
             ]),
         ]);

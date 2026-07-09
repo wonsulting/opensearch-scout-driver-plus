@@ -5,14 +5,13 @@ namespace OpenSearch\ScoutDriverPlus\Tests\Unit\QueryParameters\Validators;
 use OpenSearch\ScoutDriverPlus\Exceptions\QueryBuilderValidationException;
 use OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator
- *
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- */
+#[CoversClass(OneOfValidator::class)]
+#[UsesClass(ParameterCollection::class)]
 final class OneOfValidatorTest extends TestCase
 {
     public function test_exception_is_thrown_when_all_required_parameters_are_missing(): void

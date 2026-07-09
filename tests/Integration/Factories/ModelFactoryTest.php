@@ -7,16 +7,15 @@ use OpenSearch\ScoutDriverPlus\Factories\ModelFactory;
 use OpenSearch\ScoutDriverPlus\Tests\App\Author;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Factories\ModelFactory
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Engine
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(ModelFactory::class)]
+#[UsesClass(DatabaseQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class ModelFactoryTest extends TestCase
 {
     private Author $author;
@@ -27,8 +26,8 @@ final class ModelFactoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->author = factory(Author::class)->create();
-        $this->book = factory(Book::class)->create(['author_id' => $this->author->getKey()]);
+        $this->author = Author::factory()->create();
+        $this->book = Book::factory()->create(['author_id' => $this->author->getKey()]);
 
         $this->modelFactory = new ModelFactory([
             $this->author->searchableAs() => new DatabaseQueryBuilder($this->author),

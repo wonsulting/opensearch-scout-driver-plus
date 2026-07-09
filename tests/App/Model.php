@@ -2,11 +2,13 @@
 
 namespace OpenSearch\ScoutDriverPlus\Tests\App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use OpenSearch\ScoutDriverPlus\Searchable;
 
 abstract class Model extends BaseModel
 {
+    use HasFactory;
     use Searchable;
 
     protected $guarded = [];

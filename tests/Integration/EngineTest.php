@@ -3,22 +3,22 @@
 namespace OpenSearch\ScoutDriverPlus\Tests\Integration;
 
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Engine
- * @covers \OpenSearch\ScoutDriverPlus\Jobs\RemoveFromSearch
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Jobs\RemoveFromSearch::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class EngineTest extends TestCase
 {
     public function test_models_can_be_found_using_default_search(): void
     {
-        factory(Book::class, rand(2, 10))->state('belongs_to_author')->create();
+        Book::factory()->count(rand(2, 10))->belongsToAuthor()->create();
 
-        $target = factory(Book::class)->state('belongs_to_author')->create(['title' => uniqid('test')]);
+        $target = Book::factory()->belongsToAuthor()->create(['title' => uniqid('test')]);
         $found = Book::search($target->title)->orderBy('id')->get();
 
         $this->assertCount(1, $found);
@@ -33,14 +33,12 @@ final class EngineTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider queueConfigProvider
-     */
+    #[DataProvider('queueConfigProvider')]
     public function test_models_can_be_indexed(array $config): void
     {
         config($config);
 
-        $source = factory(Book::class, rand(2, 10))->state('belongs_to_author')->create();
+        $source = Book::factory()->count(rand(2, 10))->belongsToAuthor()->create();
         $found = Book::search()->get();
 
         // assert that the amount of created models corresponds number of found models
@@ -49,14 +47,12 @@ final class EngineTest extends TestCase
         $this->assertCount(0, $source->pluck('id')->diff($found->pluck('id')));
     }
 
-    /**
-     * @dataProvider queueConfigProvider
-     */
+    #[DataProvider('queueConfigProvider')]
     public function test_models_can_be_deleted(array $config): void
     {
         config($config);
 
-        $source = factory(Book::class, rand(2, 10))->state('belongs_to_author')->create();
+        $source = Book::factory()->count(rand(2, 10))->belongsToAuthor()->create();
 
         // delete newly created models
         $source->each(static function (Book $model) {

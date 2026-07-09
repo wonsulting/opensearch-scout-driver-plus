@@ -10,17 +10,16 @@ use OpenSearch\ScoutDriverPlus\Decorators\Suggestion;
 use OpenSearch\ScoutDriverPlus\Factories\ModelFactory;
 use OpenSearch\ScoutDriverPlus\Tests\App\Author;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Decorators\Suggestion
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Engine
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\ModelFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(Suggestion::class)]
+#[UsesClass(DatabaseQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(ModelFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class SuggestionTest extends TestCase
 {
     private Collection $models;
@@ -30,7 +29,7 @@ final class SuggestionTest extends TestCase
     {
         parent::setUp();
 
-        $this->models = factory(Author::class, 5)->create();
+        $this->models = Author::factory()->count(5)->create();
 
         $baseSuggestion = new BaseSuggestion([
             'text' => 'tes',

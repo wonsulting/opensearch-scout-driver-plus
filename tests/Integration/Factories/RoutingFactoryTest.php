@@ -6,14 +6,13 @@ use OpenSearch\Adapter\Documents\Routing;
 use OpenSearch\ScoutDriverPlus\Factories\RoutingFactory;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Engine
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class RoutingFactoryTest extends TestCase
 {
     private RoutingFactory $routingFactory;
@@ -27,7 +26,7 @@ final class RoutingFactoryTest extends TestCase
 
     public function test_routing_can_be_made_from_models(): void
     {
-        $models = factory(Book::class, rand(2, 10))->state('belongs_to_author')->create();
+        $models = Book::factory()->count(rand(2, 10))->belongsToAuthor()->create();
         $routing = new Routing();
 
         foreach ($models as $model) {

@@ -3,12 +3,11 @@
 namespace OpenSearch\ScoutDriverPlus\Tests\Unit\Builders;
 
 use OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder
- */
+#[CoversClass(MatchAllQueryBuilder::class)]
 final class MatchAllQueryBuilderTest extends TestCase
 {
     private MatchAllQueryBuilder $builder;

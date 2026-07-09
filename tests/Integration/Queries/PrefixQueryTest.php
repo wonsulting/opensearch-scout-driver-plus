@@ -5,38 +5,37 @@ namespace OpenSearch\ScoutDriverPlus\Tests\Integration\Queries;
 use OpenSearch\ScoutDriverPlus\Support\Query;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Builders\PrefixQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Engine
- * @covers \OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Factories\ModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Support\Query
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Hit
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\SearchResult
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\ParameterFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\PrefixQueryBuilder::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\ModelFactory::class)]
+#[CoversClass(Query::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\Hit::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\SearchResult::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\ParameterFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class PrefixQueryTest extends TestCase
 {
     public function test_models_can_be_found_using_field_and_value(): void
     {
         // additional mixin
-        factory(Book::class)
-            ->state('belongs_to_author')
+        Book::factory()
+            ->belongsToAuthor()
             ->create(['title' => 'First']);
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['title' => 'Second']);
 
         $query = Query::prefix()

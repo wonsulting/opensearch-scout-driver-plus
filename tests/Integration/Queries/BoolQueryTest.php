@@ -9,51 +9,50 @@ use OpenSearch\ScoutDriverPlus\Support\Query;
 use OpenSearch\ScoutDriverPlus\Tests\App\Author;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
 use const SORT_NUMERIC;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Builders\BoolQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Engine
- * @covers \OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Factories\ModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Support\Query
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\MatchQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\RangeQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\TermQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Hit
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\SearchResult
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\ParameterFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Shared\FieldParameter
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Shared\QueryStringParameter
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Shared\ValueParameter
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\FlatArrayTransformer
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\CompoundValidator
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- * @uses   \OpenSearch\ScoutDriverPlus\Support\Arr
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder::class)]
+#[CoversClass(BoolQueryBuilder::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\ModelFactory::class)]
+#[CoversClass(Query::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\MatchQueryBuilder::class)]
+#[UsesClass(RangeQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\TermQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\Hit::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\SearchResult::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\ParameterFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Shared\FieldParameter::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Shared\QueryStringParameter::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Shared\ValueParameter::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\FlatArrayTransformer::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\CompoundValidator::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Support\Arr::class)]
 final class BoolQueryTest extends TestCase
 {
     public function test_models_can_be_found_using_must(): void
     {
         // additional mixin
-        factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create();
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['title' => uniqid('test')]);
 
         $query = Query::bool()->must(
@@ -69,12 +68,12 @@ final class BoolQueryTest extends TestCase
 
     public function test_models_can_be_found_using_must_not(): void
     {
-        $mixin = factory(Book::class)
-            ->state('belongs_to_author')
+        $mixin = Book::factory()
+            ->belongsToAuthor()
             ->create(['title' => uniqid('test')]);
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create();
 
         $query = Query::bool()->mustNot(
@@ -91,8 +90,8 @@ final class BoolQueryTest extends TestCase
     public function test_models_can_be_found_using_should(): void
     {
         $source = collect(['2018-04-23', '2003-01-14', '2020-03-07'])->map(
-            static fn (string $published) => factory(Book::class)
-                ->state('belongs_to_author')
+            static fn (string $published) => Book::factory()
+                ->belongsToAuthor()
                 ->create(['published' => Carbon::createFromFormat('Y-m-d', $published)])
         );
 
@@ -122,12 +121,12 @@ final class BoolQueryTest extends TestCase
     public function test_models_can_be_found_using_filter(): void
     {
         // additional mixin
-        factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create(['published' => Carbon::create(2010, 5, 10)]);
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['published' => Carbon::create(2020, 6, 7)]);
 
         $query = Query::bool()->filter(
@@ -145,8 +144,8 @@ final class BoolQueryTest extends TestCase
     {
         $this->config->set('scout.soft_delete', true);
 
-        $source = factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        $source = Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create();
 
         $target = $source->first();
@@ -168,8 +167,8 @@ final class BoolQueryTest extends TestCase
     {
         $this->config->set('scout.soft_delete', true);
 
-        $target = factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create()
             ->sortBy('id', SORT_NUMERIC);
 
@@ -191,8 +190,8 @@ final class BoolQueryTest extends TestCase
     {
         $this->config->set('scout.soft_delete', true);
 
-        $source = factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        $source = Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create();
 
         $target = $source->first();
@@ -211,8 +210,8 @@ final class BoolQueryTest extends TestCase
     {
         $this->config->set('scout.soft_delete', true);
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create();
 
         $target->delete();
@@ -231,16 +230,16 @@ final class BoolQueryTest extends TestCase
     public function test_models_can_be_found_in_multiple_indices(): void
     {
         // additional mixins
-        factory(Book::class, rand(2, 10))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 10))
+            ->belongsToAuthor()
             ->create();
 
-        $firstTarget = factory(Author::class)
-            ->state('has_books')
+        $firstTarget = Author::factory()
+            ->withBooks()
             ->create(['name' => uniqid('author', true)]);
 
-        $secondTarget = factory(Book::class)
-            ->state('belongs_to_author')
+        $secondTarget = Book::factory()
+            ->belongsToAuthor()
             ->create(['title' => uniqid('book', true)]);
 
         $query = Query::bool()
@@ -267,12 +266,12 @@ final class BoolQueryTest extends TestCase
     public function test_models_can_be_found_using_query_builder(): void
     {
         // additional mixin
-        factory(Book::class, rand(2, 5))
-            ->state('belongs_to_author')
+        Book::factory()->count(rand(2, 5))
+            ->belongsToAuthor()
             ->create(['published' => '2019-03-07']);
 
-        $target = factory(Book::class)
-            ->state('belongs_to_author')
+        $target = Book::factory()
+            ->belongsToAuthor()
             ->create(['published' => '2020-12-07']);
 
         $builder = (new BoolQueryBuilder())->must(
