@@ -5,31 +5,30 @@ namespace OpenSearch\ScoutDriverPlus\Tests\Integration\Queries;
 use OpenSearch\ScoutDriverPlus\Support\Query;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use const SORT_NUMERIC;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Engine
- * @covers \OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Factories\ModelFactory
- * @covers \OpenSearch\ScoutDriverPlus\Support\Query
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Hit
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\SearchResult
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\ParameterFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory::class)]
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Factories\ModelFactory::class)]
+#[CoversClass(Query::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\Hit::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\SearchResult::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\ParameterFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class MatchAllQueryTest extends TestCase
 {
     public function test_all_models_can_be_found(): void
     {
-        $target = factory(Book::class, rand(8, 10))
-            ->state('belongs_to_author')
+        $target = Book::factory()->count(rand(8, 10))
+            ->belongsToAuthor()
             ->create()
             ->sortBy('id', SORT_NUMERIC);
 

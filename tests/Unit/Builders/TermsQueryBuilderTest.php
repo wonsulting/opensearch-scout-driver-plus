@@ -3,16 +3,15 @@
 namespace OpenSearch\ScoutDriverPlus\Tests\Unit\Builders;
 
 use OpenSearch\ScoutDriverPlus\Builders\TermsQueryBuilder;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Builders\TermsQueryBuilder
- *
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\CallbackArrayTransformer
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder::class)]
+#[CoversClass(TermsQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\CallbackArrayTransformer::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator::class)]
 final class TermsQueryBuilderTest extends TestCase
 {
     private TermsQueryBuilder $builder;

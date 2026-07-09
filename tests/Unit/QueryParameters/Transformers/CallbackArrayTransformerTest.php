@@ -4,13 +4,12 @@ namespace OpenSearch\ScoutDriverPlus\Tests\Unit\QueryParameters\Transformers;
 
 use OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\CallbackArrayTransformer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\CallbackArrayTransformer
- *
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- */
+#[CoversClass(CallbackArrayTransformer::class)]
+#[UsesClass(ParameterCollection::class)]
 final class CallbackArrayTransformerTest extends TestCase
 {
     public function test_callback_can_transform_parameters_to_array(): void

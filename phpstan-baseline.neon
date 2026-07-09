@@ -1,36 +1,295 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method OpenSearch\\\\ScoutDriverPlus\\\\Builders\\\\SearchParametersBuilder\\:\\:resolveJoinedIndexName\\(\\) should return string but returns mixed\\.$#"
+			message: '#^Cannot access offset ''filter'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Builders/BoolQueryBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$array of static method OpenSearch\\ScoutDriverPlus\\Support\\Arr\:\:wrapAssoc\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Builders/BoolQueryBuilder.php
+
+		-
+			message: '#^Cannot call method whereIn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Builders/DatabaseQueryBuilder.php
+
+		-
+			message: '#^Cannot call method with\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Builders/DatabaseQueryBuilder.php
+
+		-
+			message: '#^Method OpenSearch\\ScoutDriverPlus\\Builders\\DatabaseQueryBuilder\:\:buildQuery\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Builders/DatabaseQueryBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\DatabaseQueryBuilder\:\:\$callback \(Closure\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/DatabaseQueryBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\DatabaseQueryBuilder\:\:\$relations \(array\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/DatabaseQueryBuilder.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: array.invalidKey
+			count: 1
+			path: src/Builders/GeoDistanceQueryBuilder.php
+
+		-
+			message: '#^Cannot access offset ''query_weight'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: src/Builders/SearchParametersBuilder.php
 
 		-
-			message: "#^Parameter \\#1 \\$items of class Illuminate\\\\Database\\\\Eloquent\\\\Collection constructor expects Illuminate\\\\Contracts\\\\Support\\\\Arrayable\\<int, TModel of Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\|iterable\\<int, TModel of Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\|null, Illuminate\\\\Support\\\\Collection\\<int, Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\> given\\.$#"
+			message: '#^Cannot access offset ''rescore_query'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Cannot access offset ''rescore_query_weight'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Method OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:resolveJoinedIndexName\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$engine \(OpenSearch\\ScoutDriverPlus\\Engine\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$explain \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$from \(int\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$minScore \(float\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$preference \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$routing \(array\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$searchType \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$size \(int\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$source \(array\|bool\|string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$trackScores \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Builders\\SearchParametersBuilder\:\:\$trackTotalHits \(bool\|int\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Builders/SearchParametersBuilder.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: array.invalidKey
+			count: 1
+			path: src/Builders/TermsQueryBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$items of class Illuminate\\Database\\Eloquent\\Collection constructor expects Illuminate\\Contracts\\Support\\Arrayable\<int, Illuminate\\Database\\Eloquent\\Model\>\|iterable\<int, Illuminate\\Database\\Eloquent\\Model\>\|null, Illuminate\\Support\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\|null\> given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Decorators/SearchResult.php
 
 		-
-			message: '#Cannot call method (getScoutKey|getScoutModelsByIds|queryScoutModelsByIds|searchableAs|scoutMetadata|pushSoftDeleteMetadata|toSearchableArray)\(\) on Illuminate\\Database\\Eloquent\\Model\|null#'
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
 			count: 2
+			path: src/Decorators/Suggestion.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
 			path: src/Engine.php
 
 		-
-			message: "#^Cannot call method searchableWith\\(\\) on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
+			message: '#^Parameter \#1 \$indexName of method OpenSearch\\Adapter\\Documents\\DocumentManager\:\:delete\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Engine.php
+
+		-
+			message: '#^Parameter \#1 \$indexName of method OpenSearch\\Adapter\\Documents\\DocumentManager\:\:index\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Engine.php
+
+		-
+			message: '#^Cannot call method searchableWith\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: src/Factories/DocumentFactory.php
 
 		-
-			message: "#^Cannot call method makeFromModels\\(\\) on mixed\\.$#"
+			message: '#^Parameter \#1 \$relations of method Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\),Illuminate\\Database\\Eloquent\\Model\>\:\:loadMissing\(\) expects array\<array\|\(callable\(Illuminate\\Database\\Eloquent\\Relations\\Relation\<\*, \*, \*\>\)\: mixed\)\|string\>\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Factories/DocumentFactory.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Factories/LazyModelFactory.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Factories/LazyModelFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Factories/LazyModelFactory.php
+
+		-
+			message: '#^Method OpenSearch\\ScoutDriverPlus\\Factories\\LazyModelFactory\:\:makeFromIndexNameAndDocumentId\(\) should return Illuminate\\Database\\Eloquent\\Model\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Factories/LazyModelFactory.php
+
+		-
+			message: '#^Parameter \#2 \$documentIds of method OpenSearch\\ScoutDriverPlus\\Factories\\ModelFactory\:\:makeFromIndexNameAndDocumentIds\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Factories/LazyModelFactory.php
+
+		-
+			message: '#^Method OpenSearch\\ScoutDriverPlus\\Factories\\ModelFactory\:\:resolveDatabaseQueryBuilder\(\) should return OpenSearch\\ScoutDriverPlus\\Builders\\DatabaseQueryBuilder\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 2
+			path: src/Factories/ModelFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: src/Factories/RoutingFactory.php
+
+		-
+			message: '#^Cannot call method searchableAs\(\) on mixed\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: src/Jobs/RemoveFromSearch.php
 
 		-
-			message: "#^Cannot call method searchableAs\\(\\) on mixed\\.$#"
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
 			count: 1
 			path: src/Jobs/RemoveFromSearch.php
 
 		-
-			message: "#^Method OpenSearch\\\\ScoutDriverPlus\\\\QueryParameters\\\\Transformers\\\\CallbackArrayTransformer\\:\\:transform\\(\\) should return array but returns mixed\\.$#"
+			message: '#^Parameter \#2 \$documentIds of method OpenSearch\\Adapter\\Documents\\DocumentManager\:\:delete\(\) expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Jobs/RemoveFromSearch.php
+
+		-
+			message: '#^Property OpenSearch\\ScoutDriverPlus\\Jobs\\RemoveFromSearch\:\:\$indexName \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Jobs/RemoveFromSearch.php
+
+		-
+			message: '#^Method OpenSearch\\ScoutDriverPlus\\QueryParameters\\Transformers\\CallbackArrayTransformer\:\:transform\(\) should return array but returns mixed\.$#'
+			identifier: return.type
 			count: 1
 			path: src/QueryParameters/Transformers/CallbackArrayTransformer.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: array.invalidKey
+			count: 1
+			path: src/QueryParameters/Transformers/GroupedArrayTransformer.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/QueryParameters/Validators/AllOfValidator.php
+
+		-
+			message: '#^Cannot call method validate\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/QueryParameters/Validators/CompoundValidator.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/QueryParameters/Validators/OneOfValidator.php
+
+		-
+			message: '#^Trait OpenSearch\\ScoutDriverPlus\\Searchable is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/Searchable.php

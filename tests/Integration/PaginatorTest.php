@@ -11,14 +11,13 @@ use OpenSearch\ScoutDriverPlus\Factories\ModelFactory;
 use OpenSearch\ScoutDriverPlus\Paginator;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\App\Model;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Paginator
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Hit
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\SearchResult
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory
- */
+#[CoversClass(Paginator::class)]
+#[UsesClass(Hit::class)]
+#[UsesClass(SearchResult::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory::class)]
 final class PaginatorTest extends TestCase
 {
     private Paginator $paginator;

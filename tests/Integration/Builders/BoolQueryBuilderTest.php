@@ -6,25 +6,24 @@ use OpenSearch\ScoutDriverPlus\Builders\BoolQueryBuilder;
 use OpenSearch\ScoutDriverPlus\Exceptions\QueryBuilderValidationException;
 use OpenSearch\ScoutDriverPlus\Support\Query;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use stdClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Builders\BoolQueryBuilder
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\TermQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\ParameterFactory
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Shared\FieldParameter
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Shared\ValueParameter
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\FlatArrayTransformer
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator
- * @uses   \OpenSearch\ScoutDriverPlus\Support\Arr
- * @uses   \OpenSearch\ScoutDriverPlus\Support\Query
- */
+#[CoversClass(\OpenSearch\ScoutDriverPlus\Builders\AbstractParameterizedQueryBuilder::class)]
+#[CoversClass(BoolQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\MatchAllQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\TermQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\ParameterFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Shared\FieldParameter::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Shared\ValueParameter::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\FlatArrayTransformer::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Support\Arr::class)]
+#[UsesClass(Query::class)]
 final class BoolQueryBuilderTest extends TestCase
 {
     private BoolQueryBuilder $builder;

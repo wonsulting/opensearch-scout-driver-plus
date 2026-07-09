@@ -12,14 +12,13 @@ use OpenSearch\ScoutDriverPlus\Factories\ModelFactory;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\App\Model;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Decorators\SearchResult
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Hit
- * @uses   \OpenSearch\ScoutDriverPlus\Decorators\Suggestion
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory
- */
+#[CoversClass(SearchResult::class)]
+#[UsesClass(Hit::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Decorators\Suggestion::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory::class)]
 final class SearchResultTest extends TestCase
 {
     private SearchResult $searchResult;

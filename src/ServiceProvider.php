@@ -28,7 +28,6 @@ final class ServiceProvider extends AbstractServiceProvider
     {
         if (
             config('scout.driver') === 'opensearch' &&
-            property_exists(Scout::class, 'removeFromSearchJob') &&
             Scout::$removeFromSearchJob === DefaultRemoveFromSearch::class
         ) {
             Scout::removeFromSearchUsing(RemoveFromSearch::class);

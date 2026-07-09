@@ -8,10 +8,9 @@ use OpenSearch\ScoutDriverPlus\Decorators\Hit;
 use OpenSearch\ScoutDriverPlus\Factories\LazyModelFactory;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Decorators\Hit
- */
+#[CoversClass(Hit::class)]
 final class HitTest extends TestCase
 {
     private Hit $hit;

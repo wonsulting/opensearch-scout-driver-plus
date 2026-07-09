@@ -3,6 +3,7 @@
 namespace OpenSearch\ScoutDriverPlus\Tests\Integration;
 
 use Illuminate\Config\Repository;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Laravel\Scout\ScoutServiceProvider;
@@ -36,6 +37,10 @@ class TestCase extends TestbenchTestCase
         $this->config->set('scout.driver', 'opensearch');
         $this->config->set('opensearch.migrations.storage.default_path', dirname(__DIR__) . '/App/opensearch/migrations');
         $this->config->set('opensearch.scout_driver.refresh_documents', true);
+
+        Factory::guessFactoryNamesUsing(
+            static fn (string $model): string => 'OpenSearch\\ScoutDriverPlus\\Tests\\App\\Factories\\' . class_basename($model) . 'Factory'
+        );
     }
 
     protected function setUp(): void
@@ -43,7 +48,6 @@ class TestCase extends TestbenchTestCase
         parent::setUp();
 
         $this->loadMigrationsFrom(dirname(__DIR__) . '/App/database/migrations');
-        $this->withFactories(dirname(__DIR__) . '/App/database/factories');
 
         $this->artisan('migrate')->run();
         $this->artisan('opensearch:migrate')->run();

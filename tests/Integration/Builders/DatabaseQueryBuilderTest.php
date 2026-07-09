@@ -7,20 +7,19 @@ use OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder;
 use OpenSearch\ScoutDriverPlus\Tests\App\Author;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- *
- * @uses \OpenSearch\ScoutDriverPlus\Engine
- * @uses \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- * @uses \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(DatabaseQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class DatabaseQueryBuilderTest extends TestCase
 {
     public function test_query_with_model_that_supports_soft_deletes(): void
     {
-        $models = factory(Book::class, 5)->state('belongs_to_author')->create();
+        $models = Book::factory()->count(5)->belongsToAuthor()->create();
         $ids = $models->pluck('id')->all();
         $query = (new DatabaseQueryBuilder($models->first()))->buildQuery($ids);
 
@@ -33,7 +32,7 @@ final class DatabaseQueryBuilderTest extends TestCase
 
     public function test_query_with_model_that_does_not_support_soft_deletes(): void
     {
-        $models = factory(Author::class, 5)->create();
+        $models = Author::factory()->count(5)->create();
         $ids = $models->pluck('id')->all();
         $query = (new DatabaseQueryBuilder($models->first()))->buildQuery($ids);
 
@@ -46,7 +45,7 @@ final class DatabaseQueryBuilderTest extends TestCase
 
     public function test_query_with_relations(): void
     {
-        $model = factory(Book::class)->state('belongs_to_author')->create();
+        $model = Book::factory()->belongsToAuthor()->create();
         $query = (new DatabaseQueryBuilder($model))->with(['author'])->buildQuery([$model->id]);
 
         $this->assertTrue($query->first()->relationLoaded('author'));
@@ -54,7 +53,7 @@ final class DatabaseQueryBuilderTest extends TestCase
 
     public function test_query_with_callback(): void
     {
-        $models = factory(Author::class, 5)->create();
+        $models = Author::factory()->count(5)->create();
 
         $sourceIds = $models->pluck('id')->all();
         $targetIds = array_slice($sourceIds, 1, 3);

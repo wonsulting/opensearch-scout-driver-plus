@@ -8,18 +8,16 @@ use OpenSearch\ScoutDriverPlus\Exceptions\NotSearchableModelException;
 use OpenSearch\ScoutDriverPlus\Tests\App\Author;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use stdClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Builders\SearchParametersBuilder
- * @covers \OpenSearch\ScoutDriverPlus\Exceptions\NotSearchableModelException
- * @covers \OpenSearch\ScoutDriverPlus\Support\Conditionable
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder
- * @uses   \OpenSearch\ScoutDriverPlus\Engine
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\ParameterFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(SearchParametersBuilder::class)]
+#[CoversClass(NotSearchableModelException::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Builders\DatabaseQueryBuilder::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\ParameterFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class SearchParametersBuilderTest extends TestCase
 {
     public function test_search_parameters_with_query_can_be_built(): void

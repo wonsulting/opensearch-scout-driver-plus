@@ -6,14 +6,13 @@ use Illuminate\Support\Facades\DB;
 use OpenSearch\ScoutDriverPlus\Factories\DocumentFactory;
 use OpenSearch\ScoutDriverPlus\Tests\App\Book;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\Factories\DocumentFactory
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Engine
- * @uses   \OpenSearch\ScoutDriverPlus\Factories\RoutingFactory
- * @uses   \OpenSearch\ScoutDriverPlus\Searchable
- */
+#[CoversClass(DocumentFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Engine::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Factories\RoutingFactory::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Searchable::class)]
 final class DocumentFactoryTest extends TestCase
 {
     private DocumentFactory $documentFactory;
@@ -27,8 +26,8 @@ final class DocumentFactoryTest extends TestCase
 
     public function test_relations_can_be_preloaded(): void
     {
-        $models = factory(Book::class, rand(2, 5))
-            ->state('belongs_to_author')
+        $models = Book::factory()->count(rand(2, 5))
+            ->belongsToAuthor()
             ->create()
             ->fresh();
 

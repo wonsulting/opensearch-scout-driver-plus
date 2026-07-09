@@ -4,6 +4,7 @@ namespace OpenSearch\ScoutDriverPlus\Builders;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Traits\Conditionable;
 use OpenSearch\Adapter\Search\SearchParameters;
 use OpenSearch\ScoutDriverPlus\Decorators\SearchResult;
 use OpenSearch\ScoutDriverPlus\Engine;
@@ -14,7 +15,6 @@ use OpenSearch\ScoutDriverPlus\Factories\ParameterFactory;
 use OpenSearch\ScoutDriverPlus\Paginator;
 use OpenSearch\ScoutDriverPlus\Searchable;
 use OpenSearch\ScoutDriverPlus\Support\Arr;
-use OpenSearch\ScoutDriverPlus\Support\Conditionable;
 use stdClass;
 
 class SearchParametersBuilder
@@ -39,17 +39,11 @@ class SearchParametersBuilder
     private ?int $from;
     private ?int $size;
     private array $suggest = [];
-    /**
-     * @var bool|string|array|null
-     */
-    private $source;
+    private bool|string|array|null $source;
     private array $collapse = [];
     private array $aggregations = [];
     private array $postFilter = [];
-    /**
-     * @var int|bool|null
-     */
-    private $trackTotalHits;
+    private int|bool|null $trackTotalHits;
     private ?bool $trackScores;
     private ?float $minScore;
     private array $indicesBoost = [];
@@ -192,7 +186,7 @@ class SearchParametersBuilder
         return $this;
     }
 
-    public function join(string $modelClass, float $boost = null): self
+    public function join(string $modelClass, ?float $boost = null): self
     {
         if (
             !is_a($modelClass, Model::class, true) ||
@@ -225,7 +219,7 @@ class SearchParametersBuilder
         return $this;
     }
 
-    public function load(array $relations, string $modelClass = null): self
+    public function load(array $relations, ?string $modelClass = null): self
     {
         $indexName = $this->resolveJoinedIndexName($modelClass);
         $this->databaseQueryBuilders[$indexName]->with($relations);
@@ -233,7 +227,7 @@ class SearchParametersBuilder
         return $this;
     }
 
-    public function refineModels(Closure $callback, string $modelClass = null): self
+    public function refineModels(Closure $callback, ?string $modelClass = null): self
     {
         $indexName = $this->resolveJoinedIndexName($modelClass);
         $this->databaseQueryBuilders[$indexName]->callback($callback);
@@ -380,7 +374,7 @@ class SearchParametersBuilder
     public function paginate(
         int $perPage = self::DEFAULT_PAGE_SIZE,
         string $pageName = 'page',
-        int $page = null
+        ?int $page = null
     ): Paginator {
         $page = $page ?? Paginator::resolveCurrentPage($pageName);
 

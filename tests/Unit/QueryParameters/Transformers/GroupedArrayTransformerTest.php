@@ -4,13 +4,12 @@ namespace OpenSearch\ScoutDriverPlus\Tests\Unit\QueryParameters\Transformers;
 
 use OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\GroupedArrayTransformer
- *
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- */
+#[CoversClass(GroupedArrayTransformer::class)]
+#[UsesClass(ParameterCollection::class)]
 final class GroupedArrayTransformerTest extends TestCase
 {
     public function test_parameters_can_be_transformed_to_grouped_array(): void

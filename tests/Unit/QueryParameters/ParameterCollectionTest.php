@@ -3,14 +3,13 @@
 namespace OpenSearch\ScoutDriverPlus\Tests\Unit\QueryParameters;
 
 use OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- *
- * @uses   \OpenSearch\ScoutDriverPlus\Support\Arr
- */
+#[CoversClass(ParameterCollection::class)]
+#[UsesClass(\OpenSearch\ScoutDriverPlus\Support\Arr::class)]
 final class ParameterCollectionTest extends TestCase
 {
     private ParameterCollection $collection;

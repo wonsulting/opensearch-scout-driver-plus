@@ -2,10 +2,10 @@
 
 namespace OpenSearch\ScoutDriverPlus\Builders;
 
+use Illuminate\Support\Traits\Conditionable;
 use OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\ArrayTransformerInterface;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Validators\ValidatorInterface;
-use OpenSearch\ScoutDriverPlus\Support\Conditionable;
 
 abstract class AbstractParameterizedQueryBuilder implements QueryBuilderInterface
 {

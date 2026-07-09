@@ -4,13 +4,12 @@ namespace OpenSearch\ScoutDriverPlus\Tests\Unit\QueryParameters\Transformers;
 
 use OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\FlatArrayTransformer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\QueryParameters\Transformers\FlatArrayTransformer
- *
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- */
+#[CoversClass(FlatArrayTransformer::class)]
+#[UsesClass(ParameterCollection::class)]
 final class FlatArrayTransformerTest extends TestCase
 {
     public function test_parameters_can_be_transformed_to_flat_array(): void

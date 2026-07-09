@@ -8,14 +8,14 @@ use OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Validators\CompoundValidator;
 use OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator;
 use OpenSearch\ScoutDriverPlus\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @covers \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\CompoundValidator
- *
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\ParameterCollection
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\AllOfValidator
- * @uses   \OpenSearch\ScoutDriverPlus\QueryParameters\Validators\OneOfValidator
- */
+#[CoversClass(CompoundValidator::class)]
+#[UsesClass(ParameterCollection::class)]
+#[UsesClass(AllOfValidator::class)]
+#[UsesClass(OneOfValidator::class)]
 final class CompoundValidatorTest extends TestCase
 {
     public static function invalidParametersDataProvider(): array
@@ -39,9 +39,7 @@ final class CompoundValidatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidParametersDataProvider
-     */
+    #[DataProvider('invalidParametersDataProvider')]
     public function test_exception_is_thrown_when_one_of_validations_fails(array $parameters): void
     {
         $this->expectException(QueryBuilderValidationException::class);
@@ -56,9 +54,7 @@ final class CompoundValidatorTest extends TestCase
         $validator->validate($parameters);
     }
 
-    /**
-     * @dataProvider validParametersDataProvider
-     */
+    #[DataProvider('validParametersDataProvider')]
     public function test_exception_is_not_thrown_when_all_validations_succeed(array $parameters): void
     {
         $parameters = new ParameterCollection($parameters);
